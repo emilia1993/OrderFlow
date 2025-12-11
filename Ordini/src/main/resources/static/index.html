@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Ordini</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        input[type="text"], input[type="date"], select {
+            padding: 6px;
+            margin: 4px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .flex {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .flex input, .flex select {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Gestione Ordini</h1>
+</header>
+
+<div class="container">
+    <h2>Azioni Ordini</h2>
+    
+    <div>
+        <button onclick="visualizzaOrdini()">Visualizza Tutti gli Ordini</button>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <h3>Inserisci Nuovo Ordine</h3>
+        <div class="form-group flex">
+            <input type="text" id="descrizione" placeholder="Descrizione">
+            <input type="date" id="dataConsegna">
+            <select id="statoOrdine">
+                <option value="IN_PREPARAZIONE">In Preparazione</option>
+                <option value="SPEDITO">Spedito</option>
+                <option value="IN_CONSEGNA">In Consegna</option>
+                <option value="CONSEGNATO">Consegnato</option>
+            </select>
+        </div>
+        <button onclick="inserisciOrdine()">Inserisci Ordine</button>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <h3>Cancella Ordine</h3>
+        <div class="form-group flex">
+            <input type="number" id="idOrdineCancella" placeholder="ID Ordine da cancellare">
+        </div>
+        <button onclick="cancellaOrdine()">Cancella Ordine</button>
+    </div>
+
+    <div style="margin-top: 30px;">
+        <h3>Lista Ordini</h3>
+        <table id="ordiniTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Descrizione</th>
+                    <th>Data Consegna</th>
+                    <th>Stato</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- I dati saranno popolati qui -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const API_URL = "http://localhost:8080/ordini"; // Modifica se il tuo endpoint è diverso
+
+    async function visualizzaOrdini() {
+        try {
+            const response = await fetch(API_URL);
+            const ordini = await response.json();
+            const tbody = document.querySelector("#ordiniTable tbody");
+            tbody.innerHTML = ""; // Pulisce la tabella
+
+            ordini.forEach(o => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${o.id}</td>
+                    <td>${o.descrizione}</td>
+                    <td>${o.dataConsegna}</td>
+                    <td>${o.statoOrdine}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        } catch (err) {
+            alert("Errore nel recupero ordini: " + err);
+        }
+    }
+
+    async function inserisciOrdine() {
+        const descrizione = document.getElementById("descrizione").value;
+        const dataConsegna = document.getElementById("dataConsegna").value;
+        const statoOrdine = document.getElementById("statoOrdine").value;
+
+        const ordine = { descrizione, dataConsegna, statoOrdine };
+
+        try {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(ordine)
+            });
+
+            if (response.ok) {
+                alert("Ordine inserito!");
+                visualizzaOrdini();
+            } else {
+                alert("Errore inserimento ordine");
+            }
+        } catch (err) {
+            alert("Errore: " + err);
+        }
+    }
+
+    async function cancellaOrdine() {
+        const id = document.getElementById("idOrdineCancella").value;
+
+        try {
+            const response = await fetch(`${API_URL}/${id}`, {
+                method: "DELETE"
+            });
+
+            if (response.ok) {
+                alert("Ordine cancellato!");
+                visualizzaOrdini();
+            } else {
+                alert("Errore nella cancellazione");
+            }
+        } catch (err) {
+            alert("Errore: " + err);
+        }
+    }
+</script>
+
+</body>
+</html>

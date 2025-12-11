@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Mostra informazioni sul caricamento della configurazione -->
+    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener"/>
+
+    <!-- ===============================
+         APPENDER CONSOLE
+    ================================ -->
+    <appender name="ConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- Console leggibile -->
+            <pattern>%d{HH:mm:ss.SSS} %-5level [%logger{36}] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ===============================
+         APPENDER FILE
+         (crea log.txt nella root del progetto)
+    ================================ -->
+    <appender name="FileAppender" class="ch.qos.logback.core.FileAppender">
+        <file>log.txt</file>
+        <append>true</append> <!-- aggiunge al file già esistente -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%logger{36}] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ===============================
+         ROOT LOGGER
+    ================================ -->
+    <root level="INFO">
+        <appender-ref ref="ConsoleAppender" />
+        <appender-ref ref="FileAppender" />
+    </root>
+
+</configuration>
