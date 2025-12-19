@@ -5,6 +5,8 @@ import com.example.Ordini.repository.TestataOrdineRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +32,9 @@ public class TestataOrdineController {
         List<TestataOrdine> ordiniModel = new ArrayList<>();
 
         converterFromEntityToModel(ordini, ordiniModel);
-        //logger.info("Conversione completata. Numero di ordini convertiti: {}", ordiniModel.size());
         return ordiniModel;
     }
-    //Metodo conversione da entity a model
+
     private static void converterFromEntityToModel(List<com.example.Ordini.entity.TestataOrdine> ordini, List<TestataOrdine> ordiniModel) {
         for (com.example.Ordini.entity.TestataOrdine ordine : ordini) {
             TestataOrdine ordineModel = new TestataOrdine();
@@ -49,53 +50,59 @@ public class TestataOrdineController {
     @PostMapping
     public TestataOrdine creaOrdine(@RequestBody TestataOrdine ordineModel) {
 
-        // Convert Model → Entity
         com.example.Ordini.entity.TestataOrdine ordineEntity =
                 getConverterFromModelToEntity(ordineModel);
 
-        // Salva nel DB
         com.example.Ordini.entity.TestataOrdine entitySalvata =
                 testataOrdineRepository.save(ordineEntity);
 
-        // Riconverti Entity → Model per il ritorno
         TestataOrdine ordineCreato = new TestataOrdine();
         ordineCreato.setId(entitySalvata.getId());
         ordineCreato.setDescrizione(entitySalvata.getDescrizione());
         ordineCreato.setDataConsegna(entitySalvata.getDataConsegna());
+
         logger.info("E' stato aggiunto un nuovo ordine");
         return ordineCreato;
     }
 
-    // Funzione per la conversione da Model a Entity
     private static com.example.Ordini.entity.TestataOrdine getConverterFromModelToEntity(TestataOrdine ordineModel) {
-        // Chiama il metodo che effettivamente converte il Model in Entity
         return converterFromModelToEntity(ordineModel);
     }
 
-    // Conversione effettiva da Model a Entity
     private static com.example.Ordini.entity.TestataOrdine converterFromModelToEntity(TestataOrdine ordineModel) {
-        // Creiamo una nuova Entity e popoliamo i campi dalla Model
         com.example.Ordini.entity.TestataOrdine ordineEntity = new com.example.Ordini.entity.TestataOrdine();
         ordineEntity.setDescrizione(ordineModel.getDescrizione());
         ordineEntity.setDataConsegna(ordineModel.getDataConsegna());
         ordineEntity.setStatoOrdine(ordineModel.getStatoOrdine());
-        // Se ci sono altre proprietà, aggiungile qui
-
         return ordineEntity;
     }
 
-    // Cancella un ordine per id (DELETE)
-
+    // DELETE con OPTIMISTIC LOCK
+    @Transactional
     @DeleteMapping("/{id}")
     public String cancellaOrdine(@PathVariable int id) {
-        if (testataOrdineRepository.existsById(id)) {
-            testataOrdineRepository.deleteById(id);
-            logger.info("l'ordine con id {} e' stato cancellato correttamente", id);
+
+        try {
+            // 1. CARICO L'ENTITÀ (necessario per usare la version)
+            com.example.Ordini.entity.TestataOrdine ordine =
+                    testataOrdineRepository.findById(id)
+                            .orElse(null);
+
+            if (ordine == null) {
+                logger.warn("Tentativo di cancellare ordine inesistente: {}", id);
+                return "Ordine con id " + id + " non trovato.";
+            }
+
+            // 2. CANCELLO l'oggetto completo (include @Version)
+            testataOrdineRepository.delete(ordine);
+
+            logger.info("Ordine con id {} cancellato correttamente.", id);
             return "Ordine con id " + id + " cancellato correttamente.";
 
-        } else {
-            logger.warn("si e' provato a cancellare l'ordine con id {} ma non esiste",id);
-            return "Ordine con id " + id + " non trovato.";
+        } catch (ObjectOptimisticLockingFailureException e) {
+            // 3. QUA VIENE PRESO IL CONFLITTO DI LOCK
+            logger.error("CONFLITTO DI LOCK su DELETE ordine {}: {}", id, e.getMessage());
+            return "Errore: un altro utente ha già modificato o cancellato questo ordine.";
         }
     }
 }

@@ -28,6 +28,10 @@ public class TestataOrdine {
     @Column(name = "stato_ordine")
     private StatoOrdine statoOrdine;
 
+    // Campo per LOCK OTTIMISTICO
+    @Version
+    private Integer version;
+
     // Relazione con righe d'ordine
     @OneToMany(mappedBy = "ordine", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RigheOrdine> righe;
@@ -35,8 +39,4 @@ public class TestataOrdine {
     // Relazione con pagamenti
     @OneToMany(mappedBy = "ordine", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pagamenti> pagamenti;
-
-    // Enum per lo stato dell'ordine
-
 }
-

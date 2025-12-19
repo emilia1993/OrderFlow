@@ -5,83 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestione Ordini</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 30px auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            margin: 5px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        input[type="text"], input[type="date"], select {
-            padding: 6px;
-            margin: 4px 0;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .form-group {
-            margin-bottom: 12px;
-        }
-
-        .flex {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .flex input, .flex select {
-            flex: 1;
-        }
+        body { font-family: Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; }
+        header { background-color: #4CAF50; color: white; padding: 20px; text-align: center; }
+        .container { max-width: 900px; margin: 30px auto; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        table, th, td { border: 1px solid #ddd; }
+        th, td { padding: 10px; text-align: center; }
+        th { background-color: #4CAF50; color: white; }
+        button { background-color: #4CAF50; color: white; border: none; padding: 8px 12px; margin: 5px; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        input[type="text"], input[type="date"], select, input[type="number"] { padding: 6px; margin: 4px 0; width: 100%; box-sizing: border-box; }
+        .form-group { margin-bottom: 12px; }
+        .flex { display: flex; gap: 10px; flex-wrap: wrap; }
+        .flex input, .flex select { flex: 1; }
     </style>
 </head>
 <body>
@@ -92,9 +28,9 @@
 
 <div class="container">
     <h2>Azioni Ordini</h2>
-    
+
     <div>
-        <button onclick="visualizzaOrdini()">Visualizza Tutti gli Ordini</button>
+        <button id="btnVisualizza" onclick="visualizzaOrdini()">Visualizza Tutti gli Ordini</button>
     </div>
 
     <div style="margin-top: 20px;">
@@ -109,7 +45,7 @@
                 <option value="CONSEGNATO">Consegnato</option>
             </select>
         </div>
-        <button onclick="inserisciOrdine()">Inserisci Ordine</button>
+        <button id="btnInserisci" onclick="inserisciOrdine()">Inserisci Ordine</button>
     </div>
 
     <div style="margin-top: 20px;">
@@ -117,31 +53,41 @@
         <div class="form-group flex">
             <input type="number" id="idOrdineCancella" placeholder="ID Ordine da cancellare">
         </div>
-        <button onclick="cancellaOrdine()">Cancella Ordine</button>
+        <button id="btnCancella" onclick="cancellaOrdine()">Cancella Ordine</button>
     </div>
 
     <div style="margin-top: 30px;">
         <h3>Lista Ordini</h3>
         <table id="ordiniTable">
             <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Descrizione</th>
-                    <th>Data Consegna</th>
-                    <th>Stato</th>
-                </tr>
+            <tr>
+                <th>ID</th>
+                <th>Descrizione</th>
+                <th>Data Consegna</th>
+                <th>Stato</th>
+            </tr>
             </thead>
             <tbody>
-                <!-- I dati saranno popolati qui -->
+            <!-- I dati saranno popolati qui -->
             </tbody>
         </table>
     </div>
 </div>
 
 <script>
-    const API_URL = "http://localhost:8080/ordini"; // Modifica se il tuo endpoint è diverso
+    const API_URL = "http://localhost:8080/ordini"; // Modifica se necessario
 
+    // Variabili per evitare clic multipli
+    let isProcessingVisualizza = false;
+    let isProcessingInserisci = false;
+    let isProcessingCancella = false;
+
+    // =================== GET ORDINI ===================
     async function visualizzaOrdini() {
+        if (isProcessingVisualizza) return;
+        isProcessingVisualizza = true;
+        document.getElementById("btnVisualizza").disabled = true;
+
         try {
             const response = await fetch(API_URL);
             const ordini = await response.json();
@@ -160,10 +106,18 @@
             });
         } catch (err) {
             alert("Errore nel recupero ordini: " + err);
+        } finally {
+            isProcessingVisualizza = false;
+            document.getElementById("btnVisualizza").disabled = false;
         }
     }
 
+    // =================== POST ORDINE ===================
     async function inserisciOrdine() {
+        if (isProcessingInserisci) return;
+        isProcessingInserisci = true;
+        document.getElementById("btnInserisci").disabled = true;
+
         const descrizione = document.getElementById("descrizione").value;
         const dataConsegna = document.getElementById("dataConsegna").value;
         const statoOrdine = document.getElementById("statoOrdine").value;
@@ -179,31 +133,51 @@
 
             if (response.ok) {
                 alert("Ordine inserito!");
+                document.getElementById("descrizione").value = "";
+                document.getElementById("dataConsegna").value = "";
                 visualizzaOrdini();
             } else {
                 alert("Errore inserimento ordine");
             }
         } catch (err) {
             alert("Errore: " + err);
+        } finally {
+            isProcessingInserisci = false;
+            document.getElementById("btnInserisci").disabled = false;
         }
     }
 
+    // =================== DELETE ORDINE ===================
     async function cancellaOrdine() {
+
+         isProcessingCancella = false;
+        if (isProcessingCancella) return;
+        //isProcessingCancella = true;
+        document.getElementById("btnCancella").disabled = true;
+
         const id = document.getElementById("idOrdineCancella").value;
+        if (!id) {
+            alert("Inserisci un ID valido!");
+            //isProcessingCancella = false;
+            document.getElementById("btnCancella").disabled = false;
+            return;
+        }
 
         try {
-            const response = await fetch(`${API_URL}/${id}`, {
-                method: "DELETE"
-            });
+            const response = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
 
             if (response.ok) {
                 alert("Ordine cancellato!");
+                document.getElementById("idOrdineCancella").value = "";
                 visualizzaOrdini();
             } else {
                 alert("Errore nella cancellazione");
             }
         } catch (err) {
             alert("Errore: " + err);
+        } finally {
+            isProcessingCancella = false;
+            document.getElementById("btnCancella").disabled = false;
         }
     }
 </script>
