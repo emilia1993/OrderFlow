@@ -1,0 +1,597 @@
+2025-12-19 10:44:21 INFO  [c.e.O.c.OrdiniControllerTest] - Starting OrdiniControllerTest using Java 21.0.4 with PID 14452 (started by Mauu1988 in C:\Users\LENOVO\Downloads\Ordini\Ordini)
+2025-12-19 10:44:21 INFO  [c.e.O.c.OrdiniControllerTest] - The following 1 profile is active: "test"
+2025-12-19 10:44:22 INFO  [o.s.d.r.c.RepositoryConfigurationDelegate] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-19 10:44:22 INFO  [o.s.d.r.c.RepositoryConfigurationDelegate] - Finished Spring Data repository scanning in 49 ms. Found 3 JPA repository interfaces.
+2025-12-19 10:44:22 INFO  [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Starting...
+2025-12-19 10:44:23 INFO  [com.zaxxer.hikari.pool.HikariPool] - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2025-12-19 10:44:23 INFO  [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Start completed.
+2025-12-19 10:44:23 INFO  [o.h.jpa.internal.util.LogHelper] - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-19 10:44:23 INFO  [org.hibernate.Version] - HHH000412: Hibernate ORM core version 6.6.33.Final
+2025-12-19 10:44:23 INFO  [o.h.c.i.RegionFactoryInitiator] - HHH000026: Second-level cache disabled
+2025-12-19 10:44:24 INFO  [o.s.o.j.p.SpringPersistenceUnitInfo] - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-19 10:44:24 WARN  [org.hibernate.orm.deprecation] - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-19 10:44:24 INFO  [o.hibernate.orm.connections.pooling] - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-19 10:44:24 INFO  [o.h.e.t.j.p.i.JtaPlatformInitiator] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-19 10:44:25 INFO  [o.s.o.j.LocalContainerEntityManagerFactoryBean] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-19 10:44:25 WARN  [o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-19 10:44:26 INFO  [o.s.b.a.w.s.WelcomePageHandlerMapping] - Adding welcome page: class path resource [static/index.html]
+2025-12-19 10:44:26 INFO  [o.s.b.a.h.H2ConsoleAutoConfiguration] - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2025-12-19 10:44:26 INFO  [o.s.b.t.m.w.SpringBootMockServletContext] - Initializing Spring TestDispatcherServlet ''
+2025-12-19 10:44:26 INFO  [o.s.t.w.s.TestDispatcherServlet] - Initializing Servlet ''
+2025-12-19 10:44:26 INFO  [o.s.t.w.s.TestDispatcherServlet] - Completed initialization in 0 ms
+2025-12-19 10:44:26 INFO  [o.a.k.c.consumer.ConsumerConfig] - ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.include.jmx.reporter = true
+	auto.offset.reset = latest
+	bootstrap.servers = [localhost:9092]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = consumer-ordini-1
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = false
+	enable.metrics.push = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = ordini
+	group.instance.id = null
+	group.protocol = classic
+	group.remote.assignor = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metadata.recovery.strategy = none
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor, class org.apache.kafka.clients.consumer.CooperativeStickyAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.max.ms = 1000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.header.urlencode = false
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 45000
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.springframework.kafka.support.serializer.JsonDeserializer
+
+2025-12-19 10:44:26 INFO  [o.a.k.c.t.i.KafkaMetricsCollector] - initializing Kafka metrics collector
+2025-12-19 10:44:27 INFO  [o.a.kafka.common.utils.AppInfoParser] - Kafka version: 3.9.1
+2025-12-19 10:44:27 INFO  [o.a.kafka.common.utils.AppInfoParser] - Kafka commitId: f745dfdcee2b9851
+2025-12-19 10:44:27 INFO  [o.a.kafka.common.utils.AppInfoParser] - Kafka startTimeMs: 1766137467147
+2025-12-19 10:44:27 INFO  [o.a.k.c.c.i.ClassicKafkaConsumer] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Subscribed to topic(s): imieiordini1
+2025-12-19 10:44:27 INFO  [o.a.k.c.consumer.ConsumerConfig] - ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.include.jmx.reporter = true
+	auto.offset.reset = latest
+	bootstrap.servers = [localhost:9092]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = consumer-ordini-group-2
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = false
+	enable.metrics.push = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = ordini-group
+	group.instance.id = null
+	group.protocol = classic
+	group.remote.assignor = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metadata.recovery.strategy = none
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor, class org.apache.kafka.clients.consumer.CooperativeStickyAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.max.ms = 1000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.header.urlencode = false
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 45000
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.springframework.kafka.support.serializer.JsonDeserializer
+
+2025-12-19 10:44:27 INFO  [o.a.k.c.t.i.KafkaMetricsCollector] - initializing Kafka metrics collector
+2025-12-19 10:44:27 INFO  [o.a.kafka.common.utils.AppInfoParser] - Kafka version: 3.9.1
+2025-12-19 10:44:27 INFO  [o.a.kafka.common.utils.AppInfoParser] - Kafka commitId: f745dfdcee2b9851
+2025-12-19 10:44:27 INFO  [o.a.kafka.common.utils.AppInfoParser] - Kafka startTimeMs: 1766137467163
+2025-12-19 10:44:27 INFO  [o.a.k.c.c.i.ClassicKafkaConsumer] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Subscribed to topic(s): imieiordini1
+2025-12-19 10:44:27 INFO  [c.e.O.c.OrdiniControllerTest] - Started OrdiniControllerTest in 6.254 seconds (process running for 7.979)
+2025-12-19 10:44:27 INFO  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Node -1 disconnected.
+2025-12-19 10:44:27 INFO  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Node -1 disconnected.
+2025-12-19 10:44:27 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-19 10:44:27 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-19 10:44:27 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2025-12-19 10:44:27 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2025-12-19 10:44:27 INFO  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Node -1 disconnected.
+2025-12-19 10:44:27 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-19 10:44:27 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2025-12-19 10:44:27 INFO  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Node -1 disconnected.
+2025-12-19 10:44:27 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-19 10:44:27 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2025-12-19 10:44:27 INFO  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Node -1 disconnected.
+2025-12-19 10:44:27 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-19 10:44:27 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2025-12-19 10:44:27 INFO  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Node -1 disconnected.
+2025-12-19 10:44:27 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-19 10:44:27 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2025-12-19 10:44:28 INFO  [c.e.O.c.TestataOrdineController] - Richiesta: visualizzazione di tutti gli ordini
+2025-12-19 10:44:28 INFO  [c.e.O.c.TestataOrdineController] - Numero di ordini trovati nel database: 0
+2025-12-19 10:44:28 INFO  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Node -1 disconnected.
+2025-12-19 10:44:28 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-19 10:44:28 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2025-12-19 10:44:28 INFO  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Node -1 disconnected.
+2025-12-19 10:44:28 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-19 10:44:28 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2025-12-19 10:44:28 INFO  [c.e.O.c.TestataOrdineController] - E' stato aggiunto un nuovo ordine
+2025-12-19 10:44:28 WARN  [c.e.O.c.TestataOrdineController] - Tentativo di cancellare ordine inesistente: 9999
+2025-12-19 10:44:28 INFO  [c.e.O.c.TestataOrdineController] - E' stato aggiunto un nuovo ordine
+2025-12-19 10:44:28 INFO  [c.e.O.c.TestataOrdineController] - Ordine con id 2 cancellato correttamente.
+2025-12-19 10:44:28 INFO  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Node -1 disconnected.
+2025-12-19 10:44:28 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-19 10:44:28 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2025-12-19 10:44:28 INFO  [o.a.k.c.c.i.ConsumerCoordinator] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Resetting generation and member id due to: consumer pro-actively leaving the group
+2025-12-19 10:44:28 INFO  [o.a.k.c.c.i.ConsumerCoordinator] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Resetting generation and member id due to: consumer pro-actively leaving the group
+2025-12-19 10:44:28 INFO  [o.a.k.c.c.i.ConsumerCoordinator] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Request joining group due to: consumer pro-actively leaving the group
+2025-12-19 10:44:28 INFO  [o.a.k.c.c.i.ConsumerCoordinator] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Request joining group due to: consumer pro-actively leaving the group
+2025-12-19 10:44:28 INFO  [o.a.k.c.c.i.ClassicKafkaConsumer] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Unsubscribed all topics or patterns and assigned partitions
+2025-12-19 10:44:28 INFO  [o.a.k.c.c.i.ClassicKafkaConsumer] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Unsubscribed all topics or patterns and assigned partitions
+2025-12-19 10:44:28 INFO  [o.a.k.c.c.i.ConsumerCoordinator] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Resetting generation and member id due to: consumer pro-actively leaving the group
+2025-12-19 10:44:28 INFO  [o.a.k.c.c.i.ConsumerCoordinator] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Resetting generation and member id due to: consumer pro-actively leaving the group
+2025-12-19 10:44:28 INFO  [o.a.k.c.c.i.ConsumerCoordinator] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Request joining group due to: consumer pro-actively leaving the group
+2025-12-19 10:44:28 INFO  [o.a.k.c.c.i.ConsumerCoordinator] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Request joining group due to: consumer pro-actively leaving the group
+2025-12-19 10:44:28 INFO  [o.a.kafka.common.metrics.Metrics] - Metrics scheduler closed
+2025-12-19 10:44:28 INFO  [o.a.kafka.common.metrics.Metrics] - Metrics scheduler closed
+2025-12-19 10:44:28 INFO  [o.a.kafka.common.metrics.Metrics] - Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2025-12-19 10:44:28 INFO  [o.a.kafka.common.metrics.Metrics] - Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2025-12-19 10:44:28 INFO  [o.a.kafka.common.metrics.Metrics] - Closing reporter org.apache.kafka.common.telemetry.internals.ClientTelemetryReporter
+2025-12-19 10:44:28 INFO  [o.a.kafka.common.metrics.Metrics] - Closing reporter org.apache.kafka.common.telemetry.internals.ClientTelemetryReporter
+2025-12-19 10:44:28 INFO  [o.a.kafka.common.metrics.Metrics] - Metrics reporters closed
+2025-12-19 10:44:28 INFO  [o.a.kafka.common.metrics.Metrics] - Metrics reporters closed
+2025-12-19 10:44:28 INFO  [o.a.kafka.common.utils.AppInfoParser] - App info kafka.consumer for consumer-ordini-1 unregistered
+2025-12-19 10:44:28 INFO  [o.a.kafka.common.utils.AppInfoParser] - App info kafka.consumer for consumer-ordini-group-2 unregistered
+2025-12-19 10:44:28 INFO  [o.s.k.l.KafkaMessageListenerContainer] - ordini: Consumer stopped
+2025-12-19 10:44:28 INFO  [o.s.k.l.KafkaMessageListenerContainer] - ordini-group: Consumer stopped
+2025-12-19 10:44:28 INFO  [o.s.o.j.LocalContainerEntityManagerFactoryBean] - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-19 10:44:28 INFO  [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Shutdown initiated...
+2025-12-19 10:44:28 INFO  [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Shutdown completed.
+2025-12-19 10:49:04 INFO  [c.e.O.c.OrdiniControllerTest] - Starting OrdiniControllerTest using Java 21.0.4 with PID 17404 (started by Mauu1988 in C:\Users\LENOVO\Downloads\Ordini\Ordini)
+2025-12-19 10:49:04 INFO  [c.e.O.c.OrdiniControllerTest] - The following 1 profile is active: "test"
+2025-12-19 10:49:05 INFO  [o.s.d.r.c.RepositoryConfigurationDelegate] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-19 10:49:05 INFO  [o.s.d.r.c.RepositoryConfigurationDelegate] - Finished Spring Data repository scanning in 47 ms. Found 3 JPA repository interfaces.
+2025-12-19 10:49:06 INFO  [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Starting...
+2025-12-19 10:49:06 INFO  [com.zaxxer.hikari.pool.HikariPool] - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2025-12-19 10:49:06 INFO  [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Start completed.
+2025-12-19 10:49:06 INFO  [o.h.jpa.internal.util.LogHelper] - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-19 10:49:06 INFO  [org.hibernate.Version] - HHH000412: Hibernate ORM core version 6.6.33.Final
+2025-12-19 10:49:06 INFO  [o.h.c.i.RegionFactoryInitiator] - HHH000026: Second-level cache disabled
+2025-12-19 10:49:07 INFO  [o.s.o.j.p.SpringPersistenceUnitInfo] - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-19 10:49:07 WARN  [org.hibernate.orm.deprecation] - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-19 10:49:07 INFO  [o.hibernate.orm.connections.pooling] - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-19 10:49:08 INFO  [o.h.e.t.j.p.i.JtaPlatformInitiator] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-19 10:49:08 INFO  [o.s.o.j.LocalContainerEntityManagerFactoryBean] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-19 10:49:09 WARN  [o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-19 10:49:09 INFO  [o.s.b.a.w.s.WelcomePageHandlerMapping] - Adding welcome page: class path resource [static/index.html]
+2025-12-19 10:49:09 INFO  [o.s.b.a.h.H2ConsoleAutoConfiguration] - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2025-12-19 10:49:09 INFO  [o.s.b.t.m.w.SpringBootMockServletContext] - Initializing Spring TestDispatcherServlet ''
+2025-12-19 10:49:09 INFO  [o.s.t.w.s.TestDispatcherServlet] - Initializing Servlet ''
+2025-12-19 10:49:09 INFO  [o.s.t.w.s.TestDispatcherServlet] - Completed initialization in 0 ms
+2025-12-19 10:49:09 INFO  [o.a.k.c.consumer.ConsumerConfig] - ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.include.jmx.reporter = true
+	auto.offset.reset = latest
+	bootstrap.servers = [localhost:9092]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = consumer-ordini-1
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = false
+	enable.metrics.push = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = ordini
+	group.instance.id = null
+	group.protocol = classic
+	group.remote.assignor = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metadata.recovery.strategy = none
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor, class org.apache.kafka.clients.consumer.CooperativeStickyAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.max.ms = 1000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.header.urlencode = false
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 45000
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.springframework.kafka.support.serializer.JsonDeserializer
+
+2025-12-19 10:49:09 INFO  [o.a.k.c.t.i.KafkaMetricsCollector] - initializing Kafka metrics collector
+2025-12-19 10:49:10 INFO  [o.a.kafka.common.utils.AppInfoParser] - Kafka version: 3.9.1
+2025-12-19 10:49:10 INFO  [o.a.kafka.common.utils.AppInfoParser] - Kafka commitId: f745dfdcee2b9851
+2025-12-19 10:49:10 INFO  [o.a.kafka.common.utils.AppInfoParser] - Kafka startTimeMs: 1766137750079
+2025-12-19 10:49:10 INFO  [o.a.k.c.c.i.ClassicKafkaConsumer] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Subscribed to topic(s): imieiordini1
+2025-12-19 10:49:10 INFO  [o.a.k.c.consumer.ConsumerConfig] - ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.include.jmx.reporter = true
+	auto.offset.reset = latest
+	bootstrap.servers = [localhost:9092]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = consumer-ordini-group-2
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = false
+	enable.metrics.push = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = ordini-group
+	group.instance.id = null
+	group.protocol = classic
+	group.remote.assignor = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metadata.recovery.strategy = none
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor, class org.apache.kafka.clients.consumer.CooperativeStickyAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.max.ms = 1000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.header.urlencode = false
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 45000
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.springframework.kafka.support.serializer.JsonDeserializer
+
+2025-12-19 10:49:10 INFO  [o.a.k.c.t.i.KafkaMetricsCollector] - initializing Kafka metrics collector
+2025-12-19 10:49:10 INFO  [o.a.kafka.common.utils.AppInfoParser] - Kafka version: 3.9.1
+2025-12-19 10:49:10 INFO  [o.a.kafka.common.utils.AppInfoParser] - Kafka commitId: f745dfdcee2b9851
+2025-12-19 10:49:10 INFO  [o.a.kafka.common.utils.AppInfoParser] - Kafka startTimeMs: 1766137750122
+2025-12-19 10:49:10 INFO  [o.a.k.c.c.i.ClassicKafkaConsumer] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Subscribed to topic(s): imieiordini1
+2025-12-19 10:49:10 INFO  [c.e.O.c.OrdiniControllerTest] - Started OrdiniControllerTest in 6.216 seconds (process running for 7.465)
+2025-12-19 10:49:10 INFO  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Node -1 disconnected.
+2025-12-19 10:49:10 INFO  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Node -1 disconnected.
+2025-12-19 10:49:10 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-19 10:49:10 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-19 10:49:10 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2025-12-19 10:49:10 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2025-12-19 10:49:10 INFO  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Node -1 disconnected.
+2025-12-19 10:49:10 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-19 10:49:10 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2025-12-19 10:49:10 INFO  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Node -1 disconnected.
+2025-12-19 10:49:10 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-19 10:49:10 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2025-12-19 10:49:10 INFO  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Node -1 disconnected.
+2025-12-19 10:49:10 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-19 10:49:10 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2025-12-19 10:49:10 INFO  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Node -1 disconnected.
+2025-12-19 10:49:10 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-19 10:49:10 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2025-12-19 10:49:10 INFO  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Node -1 disconnected.
+2025-12-19 10:49:10 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-19 10:49:10 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2025-12-19 10:49:10 INFO  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Node -1 disconnected.
+2025-12-19 10:49:10 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-19 10:49:10 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2025-12-19 10:49:11 INFO  [c.e.O.c.TestataOrdineController] - Richiesta: visualizzazione di tutti gli ordini
+2025-12-19 10:49:11 INFO  [c.e.O.c.TestataOrdineController] - Numero di ordini trovati nel database: 0
+2025-12-19 10:49:11 INFO  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Node -1 disconnected.
+2025-12-19 10:49:11 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-19 10:49:11 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2025-12-19 10:49:11 INFO  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Node -1 disconnected.
+2025-12-19 10:49:11 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-19 10:49:11 WARN  [o.apache.kafka.clients.NetworkClient] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2025-12-19 10:49:11 INFO  [c.e.O.c.TestataOrdineController] - E' stato aggiunto un nuovo ordine
+2025-12-19 10:49:11 WARN  [c.e.O.c.TestataOrdineController] - Tentativo di cancellare ordine inesistente: 9999
+2025-12-19 10:49:11 INFO  [c.e.O.c.TestataOrdineController] - E' stato aggiunto un nuovo ordine
+2025-12-19 10:49:11 INFO  [c.e.O.c.TestataOrdineController] - Ordine con id 2 cancellato correttamente.
+2025-12-19 10:49:11 INFO  [o.a.k.c.c.i.ConsumerCoordinator] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Resetting generation and member id due to: consumer pro-actively leaving the group
+2025-12-19 10:49:11 INFO  [o.a.k.c.c.i.ConsumerCoordinator] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Resetting generation and member id due to: consumer pro-actively leaving the group
+2025-12-19 10:49:11 INFO  [o.a.k.c.c.i.ConsumerCoordinator] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Request joining group due to: consumer pro-actively leaving the group
+2025-12-19 10:49:11 INFO  [o.a.k.c.c.i.ConsumerCoordinator] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Request joining group due to: consumer pro-actively leaving the group
+2025-12-19 10:49:11 INFO  [o.a.k.c.c.i.ClassicKafkaConsumer] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Unsubscribed all topics or patterns and assigned partitions
+2025-12-19 10:49:11 INFO  [o.a.k.c.c.i.ClassicKafkaConsumer] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Unsubscribed all topics or patterns and assigned partitions
+2025-12-19 10:49:11 INFO  [o.a.k.c.c.i.ConsumerCoordinator] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Resetting generation and member id due to: consumer pro-actively leaving the group
+2025-12-19 10:49:11 INFO  [o.a.k.c.c.i.ConsumerCoordinator] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Resetting generation and member id due to: consumer pro-actively leaving the group
+2025-12-19 10:49:11 INFO  [o.a.k.c.c.i.ConsumerCoordinator] - [Consumer clientId=consumer-ordini-1, groupId=ordini] Request joining group due to: consumer pro-actively leaving the group
+2025-12-19 10:49:11 INFO  [o.a.k.c.c.i.ConsumerCoordinator] - [Consumer clientId=consumer-ordini-group-2, groupId=ordini-group] Request joining group due to: consumer pro-actively leaving the group
+2025-12-19 10:49:11 INFO  [o.a.kafka.common.metrics.Metrics] - Metrics scheduler closed
+2025-12-19 10:49:11 INFO  [o.a.kafka.common.metrics.Metrics] - Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2025-12-19 10:49:11 INFO  [o.a.kafka.common.metrics.Metrics] - Closing reporter org.apache.kafka.common.telemetry.internals.ClientTelemetryReporter
+2025-12-19 10:49:11 INFO  [o.a.kafka.common.metrics.Metrics] - Metrics reporters closed
+2025-12-19 10:49:11 INFO  [o.a.kafka.common.metrics.Metrics] - Metrics scheduler closed
+2025-12-19 10:49:11 INFO  [o.a.kafka.common.metrics.Metrics] - Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2025-12-19 10:49:11 INFO  [o.a.kafka.common.metrics.Metrics] - Closing reporter org.apache.kafka.common.telemetry.internals.ClientTelemetryReporter
+2025-12-19 10:49:11 INFO  [o.a.kafka.common.metrics.Metrics] - Metrics reporters closed
+2025-12-19 10:49:11 INFO  [o.a.kafka.common.utils.AppInfoParser] - App info kafka.consumer for consumer-ordini-1 unregistered
+2025-12-19 10:49:11 INFO  [o.a.kafka.common.utils.AppInfoParser] - App info kafka.consumer for consumer-ordini-group-2 unregistered
+2025-12-19 10:49:11 INFO  [o.s.k.l.KafkaMessageListenerContainer] - ordini: Consumer stopped
+2025-12-19 10:49:11 INFO  [o.s.k.l.KafkaMessageListenerContainer] - ordini-group: Consumer stopped
+2025-12-19 10:49:11 INFO  [o.s.o.j.LocalContainerEntityManagerFactoryBean] - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-19 10:49:11 INFO  [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Shutdown initiated...
+2025-12-19 10:49:11 INFO  [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Shutdown completed.
