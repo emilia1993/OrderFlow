@@ -141,8 +141,11 @@ Crea un nuovo ordine.
   "dataConsegna": "2026-01-20",
   "statoOrdine": "CREATO"
 }
-DELETE /ordini/{id}
+```
+
+### DELETE /ordini/{id}
 Elimina un ordine tramite ID con supporto a Optimistic Locking.
+
 
 🧩 Kafka Integration
 Il progetto include integrazione con Apache Kafka.
@@ -168,9 +171,11 @@ Logga gli ordini ricevuti
 
 Svuota il buffer dopo l’elaborazione
 
+
 🔐 Concurrency Control
 La cancellazione degli ordini utilizza Optimistic Locking (@Version)
 per prevenire conflitti in ambienti concorrenti.
+
 
 🧪 H2 Console
 Database in-memory.
@@ -185,6 +190,7 @@ Username: sa
 
 Password: password
 
+
 🪵 Logging
 Configurato tramite Logback:
 
@@ -194,17 +200,19 @@ File log.txt
 
 Livello default: INFO
 
-▶️ Run Locally
 
+▶️ Run Locally
 mvn clean package
 java -jar target/Ordini-0.0.1-SNAPSHOT.jar
 
 Oppure:
 mvn spring-boot:run
 
+
 🐳 Docker
 docker build -t ordini-app .
 docker run -p 8080:8080 ordini-app
+
 
 🔖 Versioning
 Versionamento tramite GitHub
@@ -214,6 +222,7 @@ Versione corrente: 0.0.1-SNAPSHOT
 Release e tag Git consigliati
 
 CHANGELOG suggerito per le versioni future
+
 
 🛣 Roadmap
  PUT / UPDATE ordini
@@ -227,6 +236,7 @@ CHANGELOG suggerito per le versioni future
  Test di integrazione
 
  Spring Security
+
 
 👤 Author
 Progetto personale per l’approfondimento di:

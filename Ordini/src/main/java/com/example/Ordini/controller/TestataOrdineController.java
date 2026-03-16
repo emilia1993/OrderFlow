@@ -1,14 +1,14 @@
 package com.example.Ordini.controller;
 
-import com.example.Ordini.model.TestataOrdine;
-import com.example.Ordini.repository.TestataOrdineRepository;
+import com.example.Ordini.enumModel.StatoOrdine;
+import com.example.Ordini.model.TestataOrdineDTO; // DTO invece di entity
+import com.example.Ordini.service.TestataOrdineService;
+import jakarta.validation.Valid; // <- per validazione DTO
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.ObjectOptimisticLockingFailureException;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -18,91 +18,45 @@ public class TestataOrdineController {
 
     private static final Logger logger = LoggerFactory.getLogger(TestataOrdineController.class);
 
-    @Autowired
-    private TestataOrdineRepository testataOrdineRepository;
+    private final TestataOrdineService ordineService;
 
-    // Visualizza tutti gli ordini (GET)
+    public TestataOrdineController(TestataOrdineService ordineService) {
+        this.ordineService = ordineService;
+    }
+
+    // GET /ordini → restituisce lista DTO
     @GetMapping
-    public List<TestataOrdine> visualizzaOrdini() {
-
+    public List<TestataOrdineDTO> visualizzaOrdini() {
         logger.info("Richiesta: visualizzazione di tutti gli ordini");
-
-        List<com.example.Ordini.entity.TestataOrdine> ordini = testataOrdineRepository.findAll();
-        logger.info("Numero di ordini trovati nel database: {}", ordini.size());
-        List<TestataOrdine> ordiniModel = new ArrayList<>();
-
-        converterFromEntityToModel(ordini, ordiniModel);
-        return ordiniModel;
+        return ordineService.getAllOrdiniDTO(); // <-- ora restituisce DTO
     }
 
-    private static void converterFromEntityToModel(List<com.example.Ordini.entity.TestataOrdine> ordini, List<TestataOrdine> ordiniModel) {
-        for (com.example.Ordini.entity.TestataOrdine ordine : ordini) {
-            TestataOrdine ordineModel = new TestataOrdine();
-            ordineModel.setId(ordine.getId());
-            ordineModel.setDescrizione(ordine.getDescrizione());
-            ordineModel.setDataConsegna(ordine.getDataConsegna());
-            ordineModel.setStatoOrdine(ordine.getStatoOrdine());
-
-            ordiniModel.add(ordineModel);
-        }
-    }
-
+    // POST /ordini → crea nuovo ordine con validazione
     @PostMapping
-    public TestataOrdine creaOrdine(@RequestBody TestataOrdine ordineModel) {
-
-        com.example.Ordini.entity.TestataOrdine ordineEntity =
-                getConverterFromModelToEntity(ordineModel);
-
-        com.example.Ordini.entity.TestataOrdine entitySalvata =
-                testataOrdineRepository.save(ordineEntity);
-
-        TestataOrdine ordineCreato = new TestataOrdine();
-        ordineCreato.setId(entitySalvata.getId());
-        ordineCreato.setDescrizione(entitySalvata.getDescrizione());
-        ordineCreato.setDataConsegna(entitySalvata.getDataConsegna());
-
-        logger.info("E' stato aggiunto un nuovo ordine");
-        return ordineCreato;
+    public TestataOrdineDTO creaOrdine(@Valid @RequestBody TestataOrdineDTO ordine) {
+        logger.info("Richiesta: creazione nuovo ordine");
+        return ordineService.creaOrdineDTO(ordine); // <-- servizio con DTO
     }
 
-    private static com.example.Ordini.entity.TestataOrdine getConverterFromModelToEntity(TestataOrdine ordineModel) {
-        return converterFromModelToEntity(ordineModel);
+    // PUT /ordini/{id} → aggiorna tutto l'ordine
+    @PutMapping("/{id}")
+    public TestataOrdineDTO aggiornaOrdine(@PathVariable int id, @Valid @RequestBody TestataOrdineDTO ordine) {
+        logger.info("Richiesta: aggiornamento ordine id {}", id);
+        return ordineService.aggiornaOrdineDTO(id, ordine);
     }
 
-    private static com.example.Ordini.entity.TestataOrdine converterFromModelToEntity(TestataOrdine ordineModel) {
-        com.example.Ordini.entity.TestataOrdine ordineEntity = new com.example.Ordini.entity.TestataOrdine();
-        ordineEntity.setDescrizione(ordineModel.getDescrizione());
-        ordineEntity.setDataConsegna(ordineModel.getDataConsegna());
-        ordineEntity.setStatoOrdine(ordineModel.getStatoOrdine());
-        return ordineEntity;
+    // PATCH /ordini/{id}/stato → aggiorna solo lo stato
+    @PatchMapping("/{id}/stato")
+    public TestataOrdineDTO aggiornaStatoOrdine(@PathVariable int id, @RequestBody StatoOrdine nuovoStato) {
+        logger.info("Richiesta: aggiornamento stato ordine id {}", id);
+        return ordineService.aggiornaStatoDTO(id, nuovoStato);
     }
 
-    // DELETE con OPTIMISTIC LOCK
-    @Transactional
+    // DELETE /ordini/{id} con Optimistic Lock
     @DeleteMapping("/{id}")
-    public String cancellaOrdine(@PathVariable int id) {
-
-        try {
-            // 1. CARICO L'ENTITÀ (necessario per usare la version)
-            com.example.Ordini.entity.TestataOrdine ordine =
-                    testataOrdineRepository.findById(id)
-                            .orElse(null);
-
-            if (ordine == null) {
-                logger.warn("Tentativo di cancellare ordine inesistente: {}", id);
-                return "Ordine con id " + id + " non trovato.";
-            }
-
-            // 2. CANCELLO l'oggetto completo (include @Version)
-            testataOrdineRepository.delete(ordine);
-
-            logger.info("Ordine con id {} cancellato correttamente.", id);
-            return "Ordine con id " + id + " cancellato correttamente.";
-
-        } catch (ObjectOptimisticLockingFailureException e) {
-            // 3. QUA VIENE PRESO IL CONFLITTO DI LOCK
-            logger.error("CONFLITTO DI LOCK su DELETE ordine {}: {}", id, e.getMessage());
-            return "Errore: un altro utente ha già modificato o cancellato questo ordine.";
-        }
+    @ResponseStatus(HttpStatus.NO_CONTENT) // REST: 204 se successo
+    public void cancellaOrdine(@PathVariable int id) {
+        logger.info("Richiesta: cancellazione ordine id {}", id);
+        ordineService.cancellaOrdine(id); // eventuali eccezioni propagate
     }
 }

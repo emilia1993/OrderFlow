@@ -1,19 +1,18 @@
 package com.example.Ordini.service;
 
-
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import com.example.Ordini.model.TestataOrdine;
+import com.example.Ordini.model.TestataOrdineDTO;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class OrdineCollector {
-    private final List<TestataOrdine> buffer = new ArrayList<>();
+    private final List<TestataOrdineDTO> buffer = new ArrayList<>();
 
     @KafkaListener(topics = "imieiordini1", groupId = "ordini")
-    public void onMessage(TestataOrdine ordine) {
+    public void onMessage(TestataOrdineDTO ordine) {
         synchronized(buffer) {
             buffer.add(ordine);
         }

@@ -22,7 +22,7 @@ public class RigheOrdine {
     private TestataOrdine ordine;
 
     @Column(name = "cod_prodotto")
-    private int codProdotto;
+    private Integer codProdotto;
 
     private BigDecimal prezzo;
 }

@@ -4,7 +4,7 @@ import com.example.Ordini.repository.TestataOrdineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
-import com.example.Ordini.model.TestataOrdine;
+import com.example.Ordini.model.TestataOrdineDTO;
 
 @Service
 public class OrdineConsumer {
@@ -13,7 +13,7 @@ public class OrdineConsumer {
     private TestataOrdineRepository testataOrdineRepository;
 
     @KafkaListener(topics = "imieiordini1", groupId = "ordini-group")
-    public void riceviOrdine(TestataOrdine ordine) {
+    public void riceviOrdine(TestataOrdineDTO ordine) {
         System.out.println("Ordine ricevuto: " + ordine.getId());
 
 
@@ -23,7 +23,7 @@ public class OrdineConsumer {
         com.example.Ordini.entity.TestataOrdine entitySalvata =
                 testataOrdineRepository.save(ordineEntity);
 
-        TestataOrdine ordineCreato = new TestataOrdine();
+        TestataOrdineDTO ordineCreato = new TestataOrdineDTO();
         ordineCreato.setId(entitySalvata.getId());
         ordineCreato.setDescrizione(entitySalvata.getDescrizione());
         ordineCreato.setDataConsegna(entitySalvata.getDataConsegna());
@@ -32,11 +32,11 @@ public class OrdineConsumer {
         return;
     }
 
-    private static com.example.Ordini.entity.TestataOrdine getConverterFromModelToEntity(TestataOrdine ordineModel) {
+    private static com.example.Ordini.entity.TestataOrdine getConverterFromModelToEntity(TestataOrdineDTO ordineModel) {
         return converterFromModelToEntity(ordineModel);
     }
 
-    private static com.example.Ordini.entity.TestataOrdine converterFromModelToEntity(TestataOrdine ordineModel) {
+    private static com.example.Ordini.entity.TestataOrdine converterFromModelToEntity(TestataOrdineDTO ordineModel) {
         com.example.Ordini.entity.TestataOrdine ordineEntity = new com.example.Ordini.entity.TestataOrdine();
         ordineEntity.setDescrizione(ordineModel.getDescrizione());
         ordineEntity.setDataConsegna(ordineModel.getDataConsegna());
