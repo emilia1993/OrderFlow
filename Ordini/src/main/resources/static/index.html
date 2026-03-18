@@ -3,62 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestione Ordini</title>
+    <title>OrderFlow</title>
+
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; }
-        header { background-color: #4CAF50; color: white; padding: 20px; text-align: center; }
-        .container { max-width: 900px; margin: 30px auto; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        table, th, td { border: 1px solid #ddd; }
-        th, td { padding: 10px; text-align: center; }
-        th { background-color: #4CAF50; color: white; }
-        button { background-color: #4CAF50; color: white; border: none; padding: 8px 12px; margin: 5px; border-radius: 4px; cursor: pointer; }
-        button:hover { background-color: #45a049; }
-        input[type="text"], input[type="date"], select, input[type="number"] { padding: 6px; margin: 4px 0; width: 100%; box-sizing: border-box; }
-        .form-group { margin-bottom: 12px; }
-        .flex { display: flex; gap: 10px; flex-wrap: wrap; }
-        .flex input, .flex select { flex: 1; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+        }
+
+        header {
+            background: rgba(0,0,0,0.3);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fc;
+            border-radius: 8px;
+        }
+
+        input, select {
+            padding: 8px;
+            margin: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background: #2a5298;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1e3c72;
+        }
+
+        button.delete {
+            background: #d9534f;
+        }
+
+        button.delete:hover {
+            background: #c9302c;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th {
+            background: #2a5298;
+            color: white;
+            padding: 10px;
+        }
+
+        td {
+            padding: 8px;
+            text-align: center;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
     </style>
 </head>
+
 <body>
 
 <header>
-    <h1>Gestione Ordini</h1>
+    🚀 OrderFlow - Order Management System
 </header>
 
 <div class="container">
-    <h2>Azioni Ordini</h2>
 
-    <div>
-        <button id="btnVisualizza" onclick="visualizzaOrdini()">Visualizza Tutti gli Ordini</button>
-    </div>
+    <!-- ================= GET ================= -->
+    <div class="section">
+        <h2>📋 Lista Ordini</h2>
+        <button onclick="visualizzaOrdini()">Visualizza Ordini</button>
 
-    <div style="margin-top: 20px;">
-        <h3>Inserisci Nuovo Ordine</h3>
-        <div class="form-group flex">
-            <input type="text" id="descrizione" placeholder="Descrizione">
-            <input type="date" id="dataConsegna">
-            <select id="statoOrdine">
-                <option value="IN_PREPARAZIONE">In Preparazione</option>
-                <option value="SPEDITO">Spedito</option>
-                <option value="IN_CONSEGNA">In Consegna</option>
-                <option value="CONSEGNATO">Consegnato</option>
-            </select>
-        </div>
-        <button id="btnInserisci" onclick="inserisciOrdine()">Inserisci Ordine</button>
-    </div>
-
-    <div style="margin-top: 20px;">
-        <h3>Cancella Ordine</h3>
-        <div class="form-group flex">
-            <input type="number" id="idOrdineCancella" placeholder="ID Ordine da cancellare">
-        </div>
-        <button id="btnCancella" onclick="cancellaOrdine()">Cancella Ordine</button>
-    </div>
-
-    <div style="margin-top: 30px;">
-        <h3>Lista Ordini</h3>
-        <table id="ordiniTable">
+        <table>
             <thead>
             <tr>
                 <th>ID</th>
@@ -67,119 +110,192 @@
                 <th>Stato</th>
             </tr>
             </thead>
-            <tbody>
-            <!-- I dati saranno popolati qui -->
-            </tbody>
+            <tbody id="ordiniTable"></tbody>
         </table>
     </div>
+
+    <!-- ================= POST ================= -->
+    <div class="section">
+        <h2>➕ Crea Ordine</h2>
+
+        <input type="text" id="descrizione" placeholder="Descrizione">
+        <input type="date" id="dataConsegna">
+
+        <select id="statoOrdine">
+            <option value="IN_PREPARAZIONE">In Preparazione</option>
+            <option value="SPEDITO">Spedito</option>
+            <option value="IN_CONSEGNA">In Consegna</option>
+            <option value="CONSEGNATO">Consegnato</option>
+        </select>
+
+        <button onclick="inserisciOrdine()">Crea</button>
+    </div>
+
+    <!-- ================= PUT ================= -->
+    <div class="section">
+        <h2>✏️ Aggiorna Ordine (PUT)</h2>
+
+        <input type="number" id="updateId" placeholder="ID">
+        <input type="text" id="updateDescrizione" placeholder="Nuova Descrizione">
+        <input type="date" id="updateData">
+
+        <select id="updateStato">
+            <option value="IN_PREPARAZIONE">In Preparazione</option>
+            <option value="SPEDITO">Spedito</option>
+            <option value="IN_CONSEGNA">In Consegna</option>
+            <option value="CONSEGNATO">Consegnato</option>
+        </select>
+
+        <button onclick="aggiornaOrdine()">Aggiorna</button>
+    </div>
+
+    <!-- ================= PATCH ================= -->
+    <div class="section">
+        <h2>🔄 Aggiorna Stato (PATCH)</h2>
+
+        <input type="number" id="patchId" placeholder="ID">
+        <select id="patchStato">
+            <option value="IN_PREPARAZIONE">In Preparazione</option>
+            <option value="SPEDITO">Spedito</option>
+            <option value="IN_CONSEGNA">In Consegna</option>
+            <option value="CONSEGNATO">Consegnato</option>
+        </select>
+
+        <button onclick="aggiornaStato()">Aggiorna Stato</button>
+    </div>
+
+    <!-- ================= DELETE ================= -->
+    <div class="section">
+        <h2>🗑 Elimina Ordine</h2>
+
+        <input type="number" id="deleteId" placeholder="ID">
+        <button class="delete" onclick="cancellaOrdine()">Elimina</button>
+    </div>
+
 </div>
 
 <script>
-    const API_URL = "http://localhost:8080/ordini"; // Modifica se necessario
 
-    // Variabili per evitare clic multipli
-    let isProcessingVisualizza = false;
-    let isProcessingInserisci = false;
-    let isProcessingCancella = false;
+    const API_URL = "http://localhost:8080/ordini";
 
-    // =================== GET ORDINI ===================
+    // 🔐 Credenziali Spring Security
+    const AUTH = "Basic " + btoa("user:password");
+
+    // ================= GET =================
     async function visualizzaOrdini() {
-        if (isProcessingVisualizza) return;
-        isProcessingVisualizza = true;
-        document.getElementById("btnVisualizza").disabled = true;
 
-        try {
-            const response = await fetch(API_URL);
-            const ordini = await response.json();
-            const tbody = document.querySelector("#ordiniTable tbody");
-            tbody.innerHTML = ""; // Pulisce la tabella
+        const response = await fetch(API_URL, {
+            headers: {
+                "Authorization": AUTH
+            }
+        });
 
-            ordini.forEach(o => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
+        if (!response.ok) {
+            alert("Errore autenticazione: " + response.status);
+            return;
+        }
+
+        const ordini = await response.json();
+        const tbody = document.getElementById("ordiniTable");
+        tbody.innerHTML = "";
+
+        ordini.forEach(o => {
+            tbody.innerHTML += `
+                <tr>
                     <td>${o.id}</td>
                     <td>${o.descrizione}</td>
                     <td>${o.dataConsegna}</td>
                     <td>${o.statoOrdine}</td>
-                `;
-                tbody.appendChild(row);
-            });
-        } catch (err) {
-            alert("Errore nel recupero ordini: " + err);
-        } finally {
-            isProcessingVisualizza = false;
-            document.getElementById("btnVisualizza").disabled = false;
-        }
+                </tr>
+            `;
+        });
     }
 
-    // =================== POST ORDINE ===================
+    // ================= POST =================
     async function inserisciOrdine() {
-        if (isProcessingInserisci) return;
-        isProcessingInserisci = true;
-        document.getElementById("btnInserisci").disabled = true;
 
-        const descrizione = document.getElementById("descrizione").value;
+        const descrizione = document.getElementById("descrizione").value.trim();
         const dataConsegna = document.getElementById("dataConsegna").value;
         const statoOrdine = document.getElementById("statoOrdine").value;
 
-        const ordine = { descrizione, dataConsegna, statoOrdine };
-
-        try {
-            const response = await fetch(API_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(ordine)
-            });
-
-            if (response.ok) {
-                alert("Ordine inserito!");
-                document.getElementById("descrizione").value = "";
-                document.getElementById("dataConsegna").value = "";
-                visualizzaOrdini();
-            } else {
-                alert("Errore inserimento ordine");
-            }
-        } catch (err) {
-            alert("Errore: " + err);
-        } finally {
-            isProcessingInserisci = false;
-            document.getElementById("btnInserisci").disabled = false;
-        }
-    }
-
-    // =================== DELETE ORDINE ===================
-    async function cancellaOrdine() {
-
-         isProcessingCancella = false;
-        if (isProcessingCancella) return;
-        //isProcessingCancella = true;
-        document.getElementById("btnCancella").disabled = true;
-
-        const id = document.getElementById("idOrdineCancella").value;
-        if (!id) {
-            alert("Inserisci un ID valido!");
-            //isProcessingCancella = false;
-            document.getElementById("btnCancella").disabled = false;
+        if (!descrizione || !dataConsegna) {
+            alert("Compila tutti i campi obbligatori");
             return;
         }
 
-        try {
-            const response = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+        const ordine = { descrizione, dataConsegna, statoOrdine };
 
-            if (response.ok) {
-                alert("Ordine cancellato!");
-                document.getElementById("idOrdineCancella").value = "";
-                visualizzaOrdini();
-            } else {
-                alert("Errore nella cancellazione");
-            }
-        } catch (err) {
-            alert("Errore: " + err);
-        } finally {
-            isProcessingCancella = false;
-            document.getElementById("btnCancella").disabled = false;
-        }
+        await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": AUTH
+            },
+            body: JSON.stringify(ordine)
+        });
+
+        visualizzaOrdini();
     }
+
+    // ================= PUT =================
+    async function aggiornaOrdine() {
+
+        const id = document.getElementById("updateId").value;
+
+        const ordine = {
+            descrizione: document.getElementById("updateDescrizione").value,
+            dataConsegna: document.getElementById("updateData").value,
+            statoOrdine: document.getElementById("updateStato").value
+        };
+
+        await fetch(`${API_URL}/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": AUTH
+            },
+            body: JSON.stringify(ordine)
+        });
+
+        visualizzaOrdini();
+    }
+
+    // ================= PATCH =================
+    async function aggiornaStato() {
+
+        const id = document.getElementById("patchId").value;
+        const stato = document.getElementById("patchStato").value;
+
+        await fetch(`${API_URL}/${id}/stato`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": AUTH
+            },
+            body: JSON.stringify(stato)
+        });
+
+        visualizzaOrdini();
+    }
+
+    // ================= DELETE =================
+    async function cancellaOrdine() {
+
+        const id = document.getElementById("deleteId").value;
+
+        await fetch(`${API_URL}/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Authorization": AUTH
+            }
+        });
+
+        visualizzaOrdini();
+    }
+
+    // Auto-load
+    window.onload = visualizzaOrdini;
+
 </script>
 
 </body>

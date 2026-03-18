@@ -9,5 +9,5 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.json.trusted.packages: "com.example.Ordini.model"
-        spring.json.value.default.type: "com.example.Ordini.model.TestataOrdineDTO"
+        spring.json.trusted.packages: "com.github.orderflow.model"
+        spring.json.value.default.type: "com.github.orderflow.model.TestataOrdineDTO"

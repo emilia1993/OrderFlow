@@ -1,14 +1,14 @@
-# Immagine base con Java (Java 17)
+# Base image with Java (Java 17)
 FROM eclipse-temurin:17-jre
 
-# Cartella di lavoro dentro il container
+# Working directory inside the container
 WORKDIR /app
 
-# Copia il file JAR dal target del progetto nella cartella /app del container
-COPY target/Ordini-0.0.1-SNAPSHOT.jar app.jar
+# Copy the JAR file from the project's target folder to the /app directory in the container
+COPY target/orderflow-1.0.1.jar app.jar
 
-# Espone la porta 8080 (default di Spring Boot)
+# Expose port 8080 (default Spring Boot port)
 EXPOSE 8080
 
-# Comando per eseguire il JAR
+# Command to run the JAR file
 ENTRYPOINT ["java", "-jar", "app.jar"]

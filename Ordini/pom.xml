@@ -11,10 +11,10 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.example</groupId>
-    <artifactId>Ordini</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>Ordini</name>
+    <groupId>com.github</groupId>
+    <artifactId>orderflow</artifactId>
+    <version>1.0.1</version>
+    <name>OrderFlow</name>
     <description>Ordini project for Spring Boot</description>
 
     <properties>

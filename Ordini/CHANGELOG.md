@@ -1,60 +1,196 @@
-# Changelog
+# 📘 OrderFlow – Changelog
 
-Tutte le modifiche rilevanti a questo progetto saranno documentate in questo file.
+This project follows Semantic Versioning and maintains a structured release history 
+to ensure traceability, maintainability, and production-grade standards.
 
-Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/)
-e il progetto segue il versionamento tramite **GitHub**.
+--- 
+
+[1.0.1] – 2026-03-16
+🚀 Major Release
+
+This version represents the first stable architecture of OrderFlow, introducing security, 
+concurrency control, event-driven processing, automated testing, and containerization.
+
+--- 
+
+## 🏗 Architecture & Core Design
+
+* Implemented layered architecture:
+  - Controller Layer
+  - Service Layer
+  - Repository Layer
+  - Entity Layer
+
+* Introduced clean separation between:
+  - DTO (API layer)
+  - Entity (persistence layer)
+
+* Standardized project structure under com.github.orderflow
+
+* Applied enterprise-ready project organization principles
+
+---
+
+## 🌐 REST API Implementation
+
+Implemented full order management endpoints:
+* GET /ordini
+* POST /ordini
+* PUT /ordini/{id}
+* PATCH /ordini/{id}/stato
+* DELETE /ordini/{id}
+
+Features:
+
+Proper HTTP status codes
+* DTO-based request/response handling
+* Validation at API boundary
+* Structured error handling
+
+---
+
+## 🔐 Security Enhancements
+
+* Integrated Spring Security
+
+* Implemented HTTP Basic Authentication
+
+* Introduced Role-Based Access Control (RBAC):
+  - USER
+  - ADMIN
+
+* Protected sensitive endpoints
+
+* Swagger UI publicly accessible for development use
+
+Security model designed for extensibility (future JWT-ready).
+
+---
+
+## 🔄 Concurrency & Data Integrity
+
+* Implemented Optimistic Locking using @Version
+* Prevents lost updates in concurrent environments
+* Ensures data consistency in multi-user scenarios
+* Added proper exception handling for conflict scenarios
+
+--- 
+
+## 📡 Event-Driven Architecture
+
+* Integrated Apache Kafka
+
+* Implemented:
+  - Producer component
+  - Consumer component
+  - Message collector
+  - Scheduled processing
+
+* Enabled asynchronous order processing
+
+* Designed for scalable distributed systems
+
+---
+
+## 🗄 Data Layer
+
+* Integrated Spring Data JPA
+
+* Modeled relational structure:
+  - TestataOrdine
+  - RigheOrdine
+  - Pagamenti
+
+* Defined:
+  - One-to-Many relationships
+  - Many-to-One relationships
+
+* Configured H2 in-memory database for development
+
+* Enabled automatic schema initialization
+
+---
+
+## 🧪 Testing & Quality Assurance
+
+Implemented comprehensive test strategy:
+* Unit tests (Service layer with Mockito)
+* Repository tests (@DataJpaTest)
+* Controller tests (MockMvc)
+* DTO validation tests
+* Global exception handler tests
+* Integrated JaCoCo for coverage reporting
+
+Focus on:
+* Reliability
+* Maintainability
+* Regression prevention
+
+---
+
+
+## 📄 Documentation & Observability
+
+* Integrated OpenAPI / Swagger
+
+* Added structured API documentation
+
+* Implemented application logging with:
+  - SLF4J
+  - Logback
+
+* Logs available in:
+  - Console
+  - File (log.txt)
+
+---
+
+## 🐳 DevOps & Deployment Readiness
+
+* Added Docker support
+* Multi-step container build process
+* Executable JAR packaging via Maven
+* Standardized deployment workflow
+* Ready for CI/CD integration
+
+---
+
+## 🛠 Build & Tooling
+
+* Maven-based project structure
+* Spring Boot 3.x
+* Java 17 baseline
+* Updated artifact configuration
+* Improved dependency management
+* Ensured compatibility across modules
 
 ---
 
 ## [Unreleased]
-### Added
-- Base per integrazione Kafka (producer, consumer, scheduler)
-- Struttura modulare Controller / Service / Repository
+
+Planned Enhancements:
+
+* JWT-based authentication
+* Advanced DTO mapping (MapStruct)
+* Dedicated APIs for RigheOrdine and Pagamenti
+* Persistent database migration (PostgreSQL)
+* Full CI/CD pipeline (GitHub Actions)
+* Production configuration profiles
+* Distributed tracing & monitoring integration
+* Cloud deployment readiness
 
 ---
 
-## [0.0.1-SNAPSHOT] – 2026-01-XX
-### Added
-- Progetto Spring Boot iniziale
-- API REST per la gestione degli ordini
-  - `GET /ordini`
-  - `POST /ordini`
-  - `DELETE /ordini/{id}`
-- Entity JPA:
-  - `TestataOrdine`
-  - `RigheOrdine`
-  - `Pagamenti`
-- Relazioni JPA:
-  - OneToMany tra TestataOrdine e RigheOrdine
-  - OneToMany tra TestataOrdine e Pagamenti
-- Optimistic Locking su TestataOrdine tramite `@Version`
-- Repository Spring Data JPA per tutte le entity
-- Database H2 in-memory
-- Script di inizializzazione `schema.sql`
-- Logging con Logback:
-  - output su console
-  - output su file `log.txt`
-- Dockerfile per containerizzazione dell’applicazione
-- Configurazione Kafka:
-  - Producer (`OrdineProducer`)
-  - Consumer / Collector (`OrdineCollector`)
-  - Scheduler per elaborazione periodica dei messaggi
+## Change Classification
 
-### Changed
-- Separazione tra Model (DTO) ed Entity JPA
-- Introduzione del layer Service per la messaggistica Kafka
+Added – New functionality
 
-### Notes
-- Il database è in-memory e i dati non persistono tra i riavvii
-- Le API implementate sono limitate a GET, POST e DELETE
+Changed – Existing functionality improvements
 
----
+Fixed – Bug resolutions
 
-## Tipologie di modifiche
-- **Added**: nuove funzionalità
-- **Changed**: modifiche a funzionalità esistenti
-- **Deprecated**: funzionalità deprecate
-- **Removed**: funzionalità rimosse
-- **Fixed**: bug fix
-- **Security**: correzioni di sicurezza
+Security – Security enhancements
+
+Deprecated – Planned removals
+
+Removed – Deleted features

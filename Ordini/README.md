@@ -1,243 +1,316 @@
-# Ordini – Spring Boot REST API
+# 🚀 **OrderFlow – Enterprise Spring Boot REST API**
 
-> REST API per la gestione degli ordini, sviluppata come progetto personale per lo studio di Spring Boot, JPA, Kafka e architetture backend moderne.
+Advanced backend system for order management built with Spring Boot 3, 
+featuring secure REST APIs, event-driven architecture (Kafka), concurrency control, and full test coverage.
 
----
+## 📌 Overview
 
-## Overview
+OrderFlow is a production-style backend application designed to manage:
 
-**Ordini** è un backend REST sviluppato in **Spring Boot** che consente la gestione di:
-- ordini (testata)
-- righe d’ordine
-- pagamenti
+- Orders (Testata)
 
-Il progetto integra:
-- **Spring Data JPA** per la persistenza
-- **H2 in-memory database**
-- **Apache Kafka** per la messaggistica asincrona
-- **Scheduler** per l’elaborazione periodica dei messaggi
-- **Optimistic Locking** per la gestione della concorrenza
+- Order Lines (Righe)
 
-Il codice è versionato tramite **GitHub** ed è pensato come base evolutiva.
+- Payments (Pagamenti)
 
----
+The project goes beyond a simple CRUD system by integrating:
 
-## Features
+🔐 Spring Security (role-based access)
 
-- API REST (GET, POST, DELETE) per gli ordini
-- Relazioni JPA tra ordini, righe e pagamenti
-- Optimistic Locking su eliminazione ordini
-- Database H2 con schema SQL
-- Logging su console e file
-- Producer e Consumer Kafka
-- Scheduler per gestione batch dei messaggi
-- Docker support
+📄 OpenAPI / Swagger documentation
+
+📡 Apache Kafka (event-driven architecture)
+
+⏱ Scheduled processing
+
+🔄 Optimistic Locking (concurrency control)
+
+🧪 Full testing strategy (unit + integration)
 
 ---
 
-## Architettura
+## 🏗 Architecture
 
-Architettura a livelli:
+Layered + Event-Driven Architecture:
 
-Controller → Model → Entity → Repository → Database
-↓
-Kafka
-↓
-Scheduler
+Controller → Service → Repository → Database
+                ↓
+               Kafka 
+                ↓
+             Scheduler
 
-- **Controller**: espone le API REST
-- **Model**: DTO per scambio dati
-- **Entity**: mapping JPA
-- **Repository**: accesso ai dati
-- **Service**: integrazione Kafka e logica asincrona
+### Responsibilities:
 
----
+* Controller:
+  - Exposes REST endpoints
+  - Handles HTTP requests/responses
+  - DTO validation
 
-## Tech Stack
+* Service:
+  - Business logic
+  - Transaction management
+  - DTO ↔ Entity mapping
 
-- Java 17
-- Spring Boot 3.5.7
-- Spring Web
-- Spring Data JPA
-- Spring Kafka
-- Spring Scheduler
-- H2 Database
-- Lombok
-- SLF4J + Logback
-- Maven
-- Docker
+* Repository:
+  - Data access via Spring Data JPA
 
----
+* Kafka Layer:
+  - Async communication between components
 
-## Project Structure
-
-com.example.Ordini
-├── controller
-│ └── TestataOrdineController.java
-├── service
-│ ├── OrdineProducer.java
-│ ├── OrdineCollector.java
-│ └── OrdineConsumer.java
-├── model
-│ ├── TestataOrdine.java
-│ ├── RigheOrdine.java
-│ └── Pagamenti.java
-├── entity
-│ ├── TestataOrdine.java
-│ ├── RigheOrdine.java
-│ └── Pagamenti.java
-├── repository
-│ ├── TestataOrdineRepository.java
-│ ├── RigheOrdineRepository.java
-│ └── PagamentiRepository.java
-├── enumModel
-│ └── StatoOrdine.java
-└── resources
-├── application.properties
-├── application.yml
-├── schema.sql
-└── logback-spring.xml
+* Scheduler:
+  - Periodic processing of buffered messages
 
 ---
 
-## Database Model
+## 🔐 Security (Spring Security)
 
-### TestataOrdine
-- `id`
-- `descrizione`
-- `dataConsegna`
-- `statoOrdine`
-- `version` (Optimistic Lock)
-- OneToMany → `RigheOrdine`
-- OneToMany → `Pagamenti`
+The API is secured using HTTP Basic Authentication with role-based access.
 
-### RigheOrdine
-- `id`
-- `cod_prodotto`
-- `prezzo`
-- ManyToOne → `TestataOrdine`
+### 👤 Users
 
-### Pagamenti
-- `id`
-- `dataPagamento`
-- ManyToOne → `TestataOrdine`
+| Username | Password | Role  |
+|----------|----------|-------|
+| user     | password | USER  |
+| admin    | password | ADMIN |
+
+
+### 🔒 Authorization Rules
+Access control is implemented using Spring Security with role-based authorization.
+
+| Endpoint                  | Access       |
+|---------------------------|--------------|
+| GET /ordini               | USER, ADMIN  |
+| POST /ordini              | USER, ADMIN  |
+| PUT /ordini/{id}          | USER, ADMIN  |
+| PATCH /ordini/{id}/stato  | USER, ADMIN  |
+| DELETE /ordini/{id}       | ADMIN only   |
+| Swagger UI                | Public       |
 
 ---
 
-## REST API
+## 📄 API Documentation (Swagger)
 
-### Base path
+Interactive API documentation available at:
+
+http://localhost:8080/swagger-ui.html
+
+OpenAPI is configured via:
+
+`OpenAPI customOpenAPI()`
+
+---
+
+## 🌐 REST API
+
+Base Path
 /ordini
 
-### GET /ordini
-Restituisce tutti gli ordini.
+* GET /ordini
+  Retrieve all orders
 
-### POST /ordini
-Crea un nuovo ordine.
+* POST /ordini
+  Create a new order
 
-```json
-{
-  "descrizione": "Ordine di esempio",
+  {
+  "descrizione": "Ordine di test",
   "dataConsegna": "2026-01-20",
-  "statoOrdine": "CREATO"
+  "statoOrdine": "IN_PREPARAZIONE"
+  }
+
+* PUT /ordini/{id}
+  Update full order
+
+* PATCH /ordini/{id}/stato
+  Update only order status
+
+  "SPEDITO"
+
+* DELETE /ordini/{id}
+  Delete order (ADMIN only)
+  Returns:
+  - 204 No Content → success
+  - 404 Not Found → if not exists
+  - 409 Conflict → optimistic locking failure
+
+---
+
+## 🧩 DTO & Validation Layer
+
+DTOs are used to decouple API from persistence layer.
+
+Validation Examples:
+* @NotBlank → descrizione
+* @FutureOrPresent → dataConsegna
+* @Min(0) → prezzo
+
+Example Error Response:
+{
+"descrizione": "Description is required",
+"dataConsegna": "Delivery date is required"
 }
-```
 
-### DELETE /ordini/{id}
-Elimina un ordine tramite ID con supporto a Optimistic Locking.
+---
 
+## 🔄 Concurrency Control
 
-🧩 Kafka Integration
-Il progetto include integrazione con Apache Kafka.
+Uses Optimistic Locking via:
 
-Producer
-OrdineProducer
+`@Version`
 
-Invia un ordine al topic Kafka imieiordini1
+Guarantees:
+* Prevents lost updates
+* Detects concurrent modifications
+* Ensures data consistency
 
-Consumer / Collector
-OrdineCollector
+--- 
 
-Ascolta il topic imieiordini1
+## 📡 Event-Driven Architecture (Kafka)
 
-Accumula i messaggi in memoria
+* Producer
+  OrdineProducer
 
-Elabora i messaggi tramite scheduler
+  - Sends orders to topic:
+    imieiordini1
 
-Scheduler
-Frequenza: ogni 5 minuti
+* Consumer
+  OrdineConsumer
 
-Logga gli ordini ricevuti
+  - Receives messages from Kafka
+  - Persists orders into database
 
-Svuota il buffer dopo l’elaborazione
+* Collector + Scheduler
+  OrdineCollector
 
+  - Buffers incoming messages
+  - Processes them every 5 minutes:
+    `@Scheduled(fixedRate = 5 * 60 * 1000)`
 
-🔐 Concurrency Control
-La cancellazione degli ordini utilizza Optimistic Locking (@Version)
-per prevenire conflitti in ambienti concorrenti.
+--- 
 
+## 🗄 Database
 
-🧪 H2 Console
-Database in-memory.
+* H2 in-memory database
+
+* Auto schema creation
+
+**H2 Console**
 
 http://localhost:8080/h2-console
 
-Credenziali
+| Property   | Value              |
+|------------|--------------------|
+| JDBC URL   | jdbc:h2:mem:testdb |
+| User       | sa                 |
+| Password   | password           |
 
-JDBC URL: jdbc:h2:mem:testdb
+--- 
 
-Username: sa
+## 🧪 Testing Strategy
 
-Password: password
+Comprehensive testing implemented:
 
+✔ Unit Tests
+  Service layer (Mockito)
 
-🪵 Logging
-Configurato tramite Logback:
+✔ Integration Tests
+  Controller (MockMvc)
 
-Console
+✔ Repository Tests
+  JPA queries
 
-File log.txt
+✔ Validation Tests
+   DTO constraints
 
-Livello default: INFO
+✔ Exception Handling Tests
 
+Run tests:
+`mvn test`
 
-▶️ Run Locally
-mvn clean package
-java -jar target/Ordini-0.0.1-SNAPSHOT.jar
+--- 
 
-Oppure:
-mvn spring-boot:run
+## 🪵 Logging
 
+Configured using:
+* SLF4J
+* Logback
 
-🐳 Docker
-docker build -t ordini-app .
-docker run -p 8080:8080 ordini-app
+Outputs:
+* Console
+* File → log.txt
 
+---
 
-🔖 Versioning
-Versionamento tramite GitHub
+## 🐳 Docker
 
-Versione corrente: 0.0.1-SNAPSHOT
+* Build image:
+  `docker build -t orderflow .`
 
-Release e tag Git consigliati
+* Run container:
+  `docker run -p 8080:8080 orderflow`
 
-CHANGELOG suggerito per le versioni future
+---
 
+## ▶️ Run Locally
 
-🛣 Roadmap
- PUT / UPDATE ordini
+Build:
+`mvn clean package`
 
- API dedicate per righe e pagamenti
+Run:
+`java -jar target/orderflow-1.0.1.jar`
 
- DTO + Mapper
+Or using Maven:
+`mvn spring-boot:run`
 
- Persistenza messaggi Kafka
+---
 
- Test di integrazione
+## 📦 Tech Stack
 
- Spring Security
+* Java 17
+* Spring Boot 3
+* Spring Web
+* Spring Data JPA
+* Spring Security
+* Spring Kafka
+* Spring Scheduler
+* H2 Database
+* Lombok
+* Maven
+* Docker
+* OpenAPI / Swagger
+* JUnit 5 / Mockito
 
+---
 
-👤 Author
-Progetto personale per l’approfondimento di:
-Spring Boot, REST API, JPA, Kafka, concorrenza e containerizzazione.
+## 📁 Project Structure
+
+com.github.orderflow
+├── controller
+├── service
+├── repository
+├── entity
+├── model (DTO)
+├── exception
+├── config
+
+---
+
+## 🛣 Roadmap
+
+* JWT Authentication
+* MapStruct (DTO mapping)
+* Dedicated APIs for Righe/Pagamenti
+* Kafka persistence & retry
+* CI/CD pipeline
+* Cloud deployment
+
+---
+
+## 👨‍💻 Author
+
+Personal project focused on:
+
+* Backend architecture
+* Distributed systems
+* Event-driven design
+* Concurrency handling
+* Enterprise Java development
