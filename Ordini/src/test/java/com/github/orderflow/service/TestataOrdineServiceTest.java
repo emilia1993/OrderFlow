@@ -1,7 +1,7 @@
 package com.github.orderflow.service;
 
 import com.github.orderflow.entity.TestataOrdine;
-import com.github.orderflow.enumModel.StatoOrdine;
+import com.github.orderflow.enums.StatoOrdine;
 import com.github.orderflow.model.TestataOrdineDTO;
 import com.github.orderflow.repository.TestataOrdineRepository;
 import org.junit.jupiter.api.BeforeEach;

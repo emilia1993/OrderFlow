@@ -1,7 +1,7 @@
 package com.github.orderflow.service;
 
 import com.github.orderflow.entity.TestataOrdine;
-import com.github.orderflow.enumModel.StatoOrdine;
+import com.github.orderflow.enums.StatoOrdine;
 import com.github.orderflow.model.TestataOrdineDTO;
 import com.github.orderflow.repository.TestataOrdineRepository;
 import org.slf4j.Logger;
@@ -30,7 +30,7 @@ public class TestataOrdineService {
         logger.info("Retrieved {} orders from the database", ordini.size());
         return ordini.stream()
                 .map(this::toDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     // CREATE DTO

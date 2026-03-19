@@ -14,8 +14,8 @@ public class PagamentiDTO {
 
     @NotNull(message = "Payment date is required")
     @FutureOrPresent(message = "Payment date must be today or a future date")
-    private LocalDate data_pagamento;
+    private LocalDate dataPagamento;
 
     @NotNull(message = "Order ID is required")
-    private Integer id_ordine;
+    private Integer idOrdine;
 }

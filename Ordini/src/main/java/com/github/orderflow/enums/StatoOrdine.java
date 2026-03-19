@@ -1,4 +1,4 @@
-package com.github.orderflow.enumModel;
+package com.github.orderflow.enums;
 
 public enum StatoOrdine {
         IN_PREPARAZIONE,

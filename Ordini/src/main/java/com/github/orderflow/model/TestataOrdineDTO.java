@@ -1,11 +1,10 @@
 package com.github.orderflow.model;
 
-import com.github.orderflow.enumModel.StatoOrdine;
+import com.github.orderflow.enums.StatoOrdine;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

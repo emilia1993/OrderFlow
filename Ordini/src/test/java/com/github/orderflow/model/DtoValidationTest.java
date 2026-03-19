@@ -26,7 +26,7 @@ class DtoValidationTest {
     @Test
     void testPagamentiDTOValidation() {
         PagamentiDTO dto = new PagamentiDTO();
-        dto.setId_ordine(null); // Required
+        dto.setIdOrdine(null); // Required
         dto.setData_pagamento(LocalDate.now().minusDays(1)); // Not valid (date in the past)
 
         Set<ConstraintViolation<PagamentiDTO>> violations = validator.validate(dto);
@@ -37,8 +37,8 @@ class DtoValidationTest {
     @Test
     void testRigheOrdineDTOValidation() {
         RigheOrdineDTO dto = new RigheOrdineDTO();
-        dto.setId_ordine(null);         // Required
-        dto.setCod_prodotto(null);      // Required
+        dto.setIdOrdine(null);         // Required
+        dto.setCodProdotto(null);      // Required
         dto.setPrezzo(-5f);             // < 0 is invalid
 
         Set<ConstraintViolation<RigheOrdineDTO>> violations = validator.validate(dto);

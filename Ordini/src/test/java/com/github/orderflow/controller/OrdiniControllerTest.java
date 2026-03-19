@@ -2,7 +2,7 @@ package com.github.orderflow.controller;
 
 import com.github.orderflow.exception.GlobalExceptionHandler;
 import com.github.orderflow.model.TestataOrdineDTO;
-import com.github.orderflow.enumModel.StatoOrdine;
+import com.github.orderflow.enums.StatoOrdine;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

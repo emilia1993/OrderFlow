@@ -1,6 +1,6 @@
 package com.github.orderflow.controller;
 
-import com.github.orderflow.enumModel.StatoOrdine;
+import com.github.orderflow.enums.StatoOrdine;
 import com.github.orderflow.model.TestataOrdineDTO; // DTO invece di entity
 import com.github.orderflow.service.TestataOrdineService;
 import io.swagger.v3.oas.annotations.tags.Tag;

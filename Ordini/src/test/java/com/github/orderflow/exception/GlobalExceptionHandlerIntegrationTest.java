@@ -38,7 +38,11 @@ class GlobalExceptionHandlerTest {
         }
 
         @PostMapping("/validation")
-        public void validation(@RequestBody @Valid TestataOrdineDTO dto) {}
+        public void validation(@RequestBody @Valid TestataOrdineDTO dto) {
+            // This endpoint is intentionally empty.
+            // It is used only to trigger validation via @Valid.
+            // If the DTO is invalid, Spring will automatically throw an exception.
+        }
     }
 
     @Test

@@ -12,10 +12,10 @@ public class RigheOrdineDTO {
     private int id;
 
     @NotNull(message = "Order ID is required")
-    private Integer id_ordine;
+    private Integer idOrdine;
 
     @NotNull(message = "Product code is required")
-    private Integer cod_prodotto;
+    private Integer codProdotto;
 
     @NotNull(message = "Price is required")
     @Min(value = 0, message = "Price must be zero or positive")

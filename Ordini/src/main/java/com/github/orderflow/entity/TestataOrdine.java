@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.github.orderflow.enumModel.StatoOrdine;
+import com.github.orderflow.enums.StatoOrdine;
 
 @Getter
 @Setter
