@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TestataOrdineService {
@@ -24,55 +23,43 @@ public class TestataOrdineService {
         this.repository = repository;
     }
 
-    // GET ALL DTO
+    // GET ALL
     public List<TestataOrdineDTO> getAllOrdiniDTO() {
         List<TestataOrdine> ordini = repository.findAll();
-        logger.info("Retrieved {} orders from the database", ordini.size());
+        logger.info("Retrieved {} orders from database", ordini.size());
         return ordini.stream()
                 .map(this::toDTO)
                 .toList();
     }
 
-    // CREATE DTO
+    // CREATE
     public TestataOrdineDTO creaOrdineDTO(TestataOrdineDTO dto) {
         TestataOrdine entity = toEntity(dto);
         TestataOrdine saved = repository.save(entity);
-        logger.info("New order created with id {}", saved.getId());
+        logger.info("Created new order with id {}", saved.getId());
         return toDTO(saved);
     }
 
-    // UPDATE DTO
+    // UPDATE
     @Transactional
     public TestataOrdineDTO aggiornaOrdineDTO(int id, TestataOrdineDTO dto) {
-        TestataOrdine ordine = repository.findById(id).orElse(null);
 
-        if (ordine == null) {
-            logger.warn("Trying to update order that does not exist with id {}", id);
-            return null;
-        }
-
+        TestataOrdine ordine = getOrdineOrThrow(id);
         ordine.setDescrizione(dto.getDescrizione());
         ordine.setDataConsegna(dto.getDataConsegna());
         ordine.setStatoOrdine(dto.getStatoOrdine());
-
         TestataOrdine updated = repository.save(ordine);
-        logger.info("Order with id {} updated successfully", id);
+        logger.info("Order {} updated successfully", id);
         return toDTO(updated);
     }
 
-    // PATCH (update only the status)
+    // PATCH (STATUS)
     @Transactional
     public TestataOrdineDTO aggiornaStatoDTO(int id, StatoOrdine nuovoStato) {
-        TestataOrdine ordine = repository.findById(id).orElse(null);
-
-        if (ordine == null) {
-            logger.warn("Trying to update order status for non-existent id {}", id);
-            return null;
-        }
-
+        TestataOrdine ordine = getOrdineOrThrow(id);
         ordine.setStatoOrdine(nuovoStato);
         TestataOrdine updated = repository.save(ordine);
-        logger.info("Order status {} updated to {}", id, nuovoStato);
+        logger.info("Order {} status updated to {}", id, nuovoStato);
         return toDTO(updated);
     }
 
@@ -80,22 +67,28 @@ public class TestataOrdineService {
     @Transactional
     public void cancellaOrdine(int id) {
         try {
-            TestataOrdine ordine = repository.findById(id)
-                    .orElseThrow(() -> {
-                        logger.warn("Trying to delete order that does not exist with id {}", id);
-                        return new IllegalArgumentException("Order with id " + id + " not found.");
-                    });
+            TestataOrdine ordine = getOrdineOrThrow(id);
 
             repository.delete(ordine);
-            logger.info("Order with id {} deleted successfully", id);
+
+            logger.info("Order {} deleted successfully", id);
 
         } catch (ObjectOptimisticLockingFailureException e) {
             logger.error("Optimistic lock error on order {}: {}", id, e.getMessage());
-            throw new IllegalStateException("This order has already been modified or deleted by another user.");
+            throw new IllegalStateException("Order already modified or deleted by another user");
         }
     }
 
-    // ENTITY <-> DTO CONVERSIONS
+    // HELPER
+    private TestataOrdine getOrdineOrThrow(int id) {
+        return repository.findById(id)
+                .orElseThrow(() -> {
+                    logger.warn("Order {} not found", id);
+                    return new IllegalArgumentException("Order with id " + id + " not found");
+                });
+    }
+
+    // MAPPING DTO ↔ ENTITY
     private TestataOrdineDTO toDTO(TestataOrdine entity) {
         TestataOrdineDTO dto = new TestataOrdineDTO();
         dto.setId(entity.getId());
@@ -107,7 +100,6 @@ public class TestataOrdineService {
 
     private TestataOrdine toEntity(TestataOrdineDTO dto) {
         TestataOrdine entity = new TestataOrdine();
-        entity.setId(dto.getId());
         entity.setDescrizione(dto.getDescrizione());
         entity.setDataConsegna(dto.getDataConsegna());
         entity.setStatoOrdine(dto.getStatoOrdine());

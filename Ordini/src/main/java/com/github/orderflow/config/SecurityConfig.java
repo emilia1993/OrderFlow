@@ -31,12 +31,12 @@ public class SecurityConfig {
                         // GET ordini -> USER o ADMIN
                         .requestMatchers("/ordini").hasAnyRole("USER","ADMIN")
 
-                        // POST PUT PATCH -> USER
-                        .requestMatchers("/ordini/**").hasAnyRole("USER","ADMIN")
-
                         // DELETE -> ADMIN
                         .requestMatchers(org.springframework.http.HttpMethod.DELETE,"/ordini/**")
                         .hasRole("ADMIN")
+
+                        // POST PUT PATCH -> USER
+                        .requestMatchers("/ordini/**").hasAnyRole("USER","ADMIN")
 
                         .anyRequest().authenticated()
                 )

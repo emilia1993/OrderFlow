@@ -27,7 +27,7 @@ class DtoValidationTest {
     void testPagamentiDTOValidation() {
         PagamentiDTO dto = new PagamentiDTO();
         dto.setIdOrdine(null); // Required
-        dto.setData_pagamento(LocalDate.now().minusDays(1)); // Not valid (date in the past)
+        dto.setDataPagamento(LocalDate.now().minusDays(1)); // Not valid (date in the past)
 
         Set<ConstraintViolation<PagamentiDTO>> violations = validator.validate(dto);
         assertEquals(2, violations.size());
