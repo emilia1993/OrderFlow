@@ -15,7 +15,6 @@ public class OrdineConsumer {
 
     private final TestataOrdineRepository testataOrdineRepository;
 
-    // ✅ Constructor injection (best practice)
     public OrdineConsumer(TestataOrdineRepository testataOrdineRepository) {
         this.testataOrdineRepository = testataOrdineRepository;
     }
